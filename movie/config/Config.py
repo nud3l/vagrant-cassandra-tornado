@@ -22,10 +22,10 @@ class Config(object):
             self.debug = True
 
         self.clusterNodes = ['10.211.55.101', '10.211.55.102', '10.211.55.103']
-        self.clusterName = "DSC Cluster"
+        self.clusterKeyspace = "moviedb"
 
         define("cluster_nodes", default=self.clusterNodes, help="cluster nodes")
-        define("cluster_name", default=self.clusterName, help="cluster name")
+        define("cluster_keyspace", default=self.clusterKeyspace, help="cluster keyspace")
         define("debug", default=self.debug, type=bool)
 
 

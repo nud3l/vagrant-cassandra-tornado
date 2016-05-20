@@ -58,7 +58,7 @@ class Application(tornado_json.application.Application):
         super(Application, self).__init__(routes=routes, generate_docs=True, settings=settings)
 
         # Connect to the keyspace on our cluster running at 127.0.0.1
-        connection.setup(config.clusterNodes, config.clusterName)
+        connection.setup(config.clusterNodes, config.clusterKeyspace, protocol_version=2)
 
         # Sync your model with your cql table
         sync_table(models.Users)

@@ -113,6 +113,19 @@ From here, you can learn more about OpsCenter:
 * [OpsCenter Documentation](http://docs.datastax.com/en/opscenter/5.2/opsc/about_c.html)
 * [Using OpsCenter](http://docs.datastax.com/en/opscenter/5.2/opsc/online_help/opscUsing_g.html)
 
+## Setup Tornado
+Copy installation files to the machine
+
+$ scp -r ./* vagrant@node0:/var/www
+
+Connect to the machine and setup the server
+
+$ vagrant ssh node0
+
+$ cd /var/www
+
+$ sudo python setup.py develop
+
 
 ### Shut Down
 

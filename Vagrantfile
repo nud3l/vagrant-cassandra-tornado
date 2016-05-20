@@ -67,10 +67,11 @@ service opscenterd start
 
 # Setup tornado server
 mkdir /var/www
+chmod 777 /var/www
 mkdir /var/log/movie
-apt-get install python
-apt-get install build-essential python-dev
-apt-get install libev4 libev-dev
+apt-get install python -y
+apt-get install build-essential python-dev -y
+apt-get install libev4 libev-dev -y
 
 echo "Vagrant provisioning complete and OpsCenter started"
 SCRIPT

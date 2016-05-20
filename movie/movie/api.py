@@ -4,7 +4,6 @@ from tornado_json.requesthandlers import APIHandler
 from tornado_json import schema
 import json
 import datetime
-import sqlalchemy
 
 # Categories imports
 from movie import models
@@ -16,20 +15,20 @@ class BaseHandler(APIHandler):
 
 # Custom handlers
 class Movie(BaseHandler):
-    #@schema.validate(
-    #    output_schema={
-    #        "type": "object",
-    #        "properties": {
-    #            "transaction": {"type": "array"},
-    #        }
-    #    }
-    #)
+    @schema.validate(
+        output_schema={
+            "type": "object",
+            "properties": {
+                "User": {"type": "string"},
+            }
+        }
+    )
     def get(self):
         try:
             models.Users.create(firstname='Bob', age=35, city='Austin', email='bob@example.com', lastname='Jones')
             q = models.Users.get(lastname='Jones')
             return {
-                "User": q,
+                "User": str(q),
             }
         except:
             self.set_status(404, 'No account available')
