@@ -2,10 +2,12 @@
 This project is supposed to give a quick start for a webserver with Tornado-JSON and Cassandra.
 
 Thanks to the following projects:
+
 https://github.com/bcantoni/vagrant-cassandra
+
 https://github.com/hfaran/Tornado-JSON
 
-## 2.MultiNode Template
+## MultiNode Template
 
 This Vagrant template sets up 4 separate VMs for creating a Cassandra cluster:
 
