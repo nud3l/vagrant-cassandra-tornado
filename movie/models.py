@@ -8,5 +8,46 @@ class Users(Model):
     city = columns.Text()
     email = columns.Text()
     lastname = columns.Text(primary_key=True)
+
     def __repr__(self):
         return '%s %d' % (self.firstname, self.age)
+
+class ActorID(Model):
+    idactor = columns.Integer(primary_key=True)
+    firstname = columns.Text()
+    lastname = columns.Text()
+    gender = columns.Text()
+    movies_id = columns.List(columns.Integer)
+    movies_name = columns.Map(columns.Integer, columns.Text)
+    movies_title = columns.Map(columns.Integer, columns.Text)
+    movies_year = columns.Map(columns.Integer, columns.Integer)
+
+class ActorLast(Model):
+    idactor = columns.Integer()
+    firstname = columns.Text()
+    lastname = columns.Text(primary_key=True)
+    gender = columns.Text()
+    movies_id = columns.List(columns.Integer)
+    movies_name = columns.Map(columns.Integer, columns.Text)
+    movies_title = columns.Map(columns.Integer, columns.Text)
+    movies_year = columns.Map(columns.Integer, columns.Integer)
+
+class ActorFirst(Model):
+    idactor = columns.Integer()
+    firstname = columns.Text(primary_key=True)
+    lastname = columns.Text()
+    gender = columns.Text()
+    movies_id = columns.List(columns.Integer)
+    movies_name = columns.Map(columns.Integer, columns.Text)
+    movies_title = columns.Map(columns.Integer, columns.Text)
+    movies_year = columns.Map(columns.Integer, columns.Integer)
+
+class ActorLastFirst(Model):
+    idactor = columns.Integer()
+    firstname = columns.Text(primary_key=True)
+    lastname = columns.Text(primary_key=True)
+    gender = columns.Text()
+    movies_id = columns.List(columns.Integer)
+    movies_name = columns.Map(columns.Integer, columns.Text)
+    movies_title = columns.Map(columns.Integer, columns.Text)
+    movies_year = columns.Map(columns.Integer, columns.Integer)

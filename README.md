@@ -114,7 +114,7 @@ From here, you can learn more about OpsCenter:
 * [Using OpsCenter](http://docs.datastax.com/en/opscenter/5.2/opsc/online_help/opscUsing_g.html)
 
 ## Setup Tornado
-Copy installation files to the machine
+Copy installation files to the machine. This can also be used to update the source code. Tornado is configured in debug and autoreload mode, which will restart the server, once you make changes to the code. Alternatively, you can setup an NFS share, so that you don't need to manually transfer the code.
 
 $ scp -r ./* vagrant@node0:/var/www
 
@@ -126,6 +126,26 @@ $ cd /var/www
 
 $ sudo python setup.py develop
 
+Create the keyspace for the movie database examples
+
+$ vagrant ssh node1
+
+$ cqlsh 10.211.55.101
+
+$ CREATE KEYSPACE moviedb WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+
+Start the webserver
+
+$ vagrant ssh node0
+
+$ sudo movie
+
+## Working with Cassandra
+There are some considerations, when you want to rebuild your datamodel in Cassandra. It is advisable to look int this post: http://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling
+
+It gives quite some design considerations to take into account when you are moving from a RDBMS solution to Cassandra. One of the most important ideas in Cassandra is that you model your data around the queries you try to serve to the user. To simplify that, the application already includes [cqlengine](https://cqlengine.readthedocs.io/en/latest/) as an ORM. With that you can start to create models quite easily. Furthermore, Cassandra is optimized for a high write throughput, so you should not worry about having duplicate data in your database.
+
+In case you want to move a lot of data to Cassandra, there are a couple of options, that are explained further in this [Datastax blog post](http://www.datastax.com/2012/11/ways-to-move-data-tofrom-datastax-enterprise-and-cassandra).
 
 ### Shut Down
 

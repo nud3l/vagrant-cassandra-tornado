@@ -62,7 +62,10 @@ class Application(tornado_json.application.Application):
 
         # Sync your model with your cql table
         sync_table(models.Users)
-
+        sync_table(models.ActorID)
+        sync_table(models.ActorFirst)
+        sync_table(models.ActorLast)
+        sync_table(models.ActorLastFirst)
 
 def main():
     tornado.options.parse_command_line()
