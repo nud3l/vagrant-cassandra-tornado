@@ -74,13 +74,13 @@ class Actor(APIHandler):
                 actor_object['firstname'] = item.firstname
                 actor_object['lastname'] = item.lastname
                 actor_object['gender'] = item.gender
-                for q in query.movies_id:
+                for q in item.movies_id:
                     movie = dict()
                     if q not in movies:
                         movie['movie_id'] = q
-                        movie['movies_name'] = query.movies_name[q]
-                        movie['movies_title'] = query.movies_title[q]
-                        movie['movies_year'] = query.movies_year[q]
+                        movie['movies_name'] = item.movies_name[q]
+                        movie['movies_title'] = item.movies_title[q]
+                        movie['movies_year'] = item.movies_year[q]
                         movies.append(movie)
                 movies = sorted(movies, key=lambda year: year['movies_year'])
                 actor_object['movie'] = movies
@@ -94,13 +94,13 @@ class Actor(APIHandler):
                 actor_object['firstname'] = item.firstname
                 actor_object['lastname'] = item.lastname
                 actor_object['gender'] = item.gender
-                for q in query.movies_id:
+                for q in item.movies_id:
                     movie = dict()
                     if q not in movies:
                         movie['movie_id'] = q
-                        movie['movies_name'] = query.movies_name[q]
-                        movie['movies_title'] = query.movies_title[q]
-                        movie['movies_year'] = query.movies_year[q]
+                        movie['movies_name'] = item.movies_name[q]
+                        movie['movies_title'] = item.movies_title[q]
+                        movie['movies_year'] = item.movies_year[q]
                         movies.append(movie)
                 movies = sorted(movies, key=lambda year: year['movies_year'])
                 actor_object['movie'] = movies
@@ -114,13 +114,13 @@ class Actor(APIHandler):
                 actor_object['firstname'] = item.firstname
                 actor_object['lastname'] = item.lastname
                 actor_object['gender'] = item.gender
-                for q in query.movies_id:
+                for q in item.movies_id:
                     movie = dict()
                     if q not in movies:
                         movie['movie_id'] = q
-                        movie['movies_name'] = query.movies_name[q]
-                        movie['movies_title'] = query.movies_title[q]
-                        movie['movies_year'] = query.movies_year[q]
+                        movie['movies_name'] = item.movies_name[q]
+                        movie['movies_title'] = item.movies_title[q]
+                        movie['movies_year'] = item.movies_year[q]
                         movies.append(movie)
                 movies = sorted(movies, key=lambda year: year['movies_year'])
                 actor_object['movie'] = movies
