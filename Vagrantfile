@@ -11,7 +11,7 @@
 # See the README for a walkthrough explaining the installation process through OpsCenter.
 
 # Adjustable settings
-CFG_MEMSIZE = "1000"    # max memory for each VM
+CFG_MEMSIZE = "3000"    # max memory for each VM
 CFG_TZ = "Europe/Berlin"   # timezone, like US/Pacific, US/Eastern, UTC, Europe/Warsaw, etc.
 SERVER_COUNT = 4
 NETWORK = '10.211.55.'
