@@ -18,9 +18,6 @@ class ActorID(Model):
     lastname = columns.Text()
     gender = columns.Text()
     movies_id = columns.List(columns.Integer)
-    movies_name = columns.Map(columns.Integer, columns.Text)
-    movies_title = columns.Map(columns.Integer, columns.Text)
-    movies_year = columns.Map(columns.Integer, columns.Integer)
 
 class ActorLast(Model):
     idactor = columns.Integer(primary_key=True)
@@ -28,9 +25,6 @@ class ActorLast(Model):
     lastname = columns.Text(primary_key=True, partition_key=True)
     gender = columns.Text()
     movies_id = columns.List(columns.Integer)
-    movies_name = columns.Map(columns.Integer, columns.Text)
-    movies_title = columns.Map(columns.Integer, columns.Text)
-    movies_year = columns.Map(columns.Integer, columns.Integer)
 
 class ActorFirst(Model):
     idactor = columns.Integer(primary_key=True)
@@ -38,9 +32,6 @@ class ActorFirst(Model):
     lastname = columns.Text()
     gender = columns.Text()
     movies_id = columns.List(columns.Integer)
-    movies_name = columns.Map(columns.Integer, columns.Text)
-    movies_title = columns.Map(columns.Integer, columns.Text)
-    movies_year = columns.Map(columns.Integer, columns.Integer)
 
 class ActorLastFirst(Model):
     idactor = columns.Integer(primary_key=True)
@@ -48,6 +39,9 @@ class ActorLastFirst(Model):
     lastname = columns.Text(primary_key=True, partition_key=True)
     gender = columns.Text()
     movies_id = columns.List(columns.Integer)
-    movies_name = columns.Map(columns.Integer, columns.Text)
-    movies_title = columns.Map(columns.Integer, columns.Text)
-    movies_year = columns.Map(columns.Integer, columns.Integer)
+
+class Movie(Model):
+    idmovie = columns.Integer(primary_key=True, partition_key=True)
+    name = columns.Text()
+    title = columns.Text()
+    year = columns.Integer()
