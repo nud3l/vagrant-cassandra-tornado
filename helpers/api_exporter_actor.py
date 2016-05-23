@@ -6,50 +6,51 @@ import requests
 import json
 
 url = 'http://node0/movie/api/actor'
-max = models.session.query(models.Actors).count()
+end = models.session.query(models.Actors).count()
 
-for i in xrange(0, max, 1000)
-actors = models.session.query(models.Actors).order_by(models.Actors.idactors)
+for i in xrange(0, end, 10000):
+    step = i + 10000
+    actors = models.session.query(models.Actors).order_by(models.Actors.idactors)[i:]
 
-for actor in actors:
-    # empty helpers
-    movies_id = []
-    data = dict()
+    for actor in actors:
+        # empty helpers
+        movies_id = []
+        data = dict()
 
-    # Query DB
-    movies = models.session.query(models.Movies)
-    acted_in = models.session.query(models.ActedIn)
+        # Query DB
+        movies = models.session.query(models.Movies)
+        acted_in = models.session.query(models.ActedIn)
 
-    # Set actor properties
-    idactor = actor.idactors
-    firstname = actor.fname
-    lastname = actor.lname
-    gender = actor.gender
+        # Set actor properties
+        idactor = actor.idactors
+        firstname = actor.fname
+        lastname = actor.lname
+        gender = actor.gender
 
-    # Filter where acted in
-    acted_in = acted_in.filter(models.ActedIn.idactors == idactor)
+        # Filter where acted in
+        acted_in = acted_in.filter(models.ActedIn.idactors == idactor)
 
-    try:
-	for acted in acted_in:
-	    movie = movies.filter(models.Movies.idmovies == acted.idmovies).first()
-	    if movie.idmovies not in movies_id:
-	        movies_id.append(movie.idmovies)
-    except:
-	print 'skip actor ID %s' % str(idactor)
+        try:
+            for acted in acted_in:
+                movie = movies.filter(models.Movies.idmovies == acted.idmovies).first()
+                if movie.idmovies not in movies_id:
+                    movies_id.append(movie.idmovies)
+        except:
+            print 'skip actor ID %s' % str(idactor)
 
-    try:
-	data['idactor'] = idactor
-	data['firstname'] = str(firstname)
-	data['lastname'] = str(lastname)
-	data['gender'] = str(gender)
-	data['movies_id'] = movies_id
+        try:
+            data['idactor'] = idactor
+            data['firstname'] = str(firstname)
+            data['lastname'] = str(lastname)
+            data['gender'] = str(gender)
+            data['movies_id'] = movies_id
 
-	response = requests.post(url, data=json.dumps(data))
+            response = requests.post(url, data=json.dumps(data))
 
-	if not response.ok:
-	    print 'Error on adding %s' % idactor
-    except:
-	print 'Error on adding %s' % idactor
+            if not response.ok:
+                print 'Error on adding %s' % idactor
+        except:
+            print 'Error on adding %s' % idactor
 
 # List: ['hot dance music']
 # Set: {'1973', 'blues'}

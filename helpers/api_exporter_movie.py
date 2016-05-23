@@ -7,44 +7,47 @@ import json
 
 
 url = 'http://node0/movie/api/movie'
-movies = models.session.query(models.Movies).order_by(models.Movies.idmovies)
+end = models.session.query(models.Movies).count()
 
+for i in xrange(0, end, 10000):
+    step = i + 10000
+    movies = models.session.query(models.Movies).order_by(models.Movies.idmovies)
 
-for movie in movies:
-    # empty helpers
-    series_list = []
-    series_string = ''
-    data = dict()
+    for movie in movies:
+        # empty helpers
+        series_list = []
+        series_string = ''
+        data = dict()
 
-    # Query DB
-    series = models.session.query(models.Series)
+        # Query DB
+        series = models.session.query(models.Series)
 
-    # Set actor properties
-    idmovie = movie.idmovies
-    title = movie.title
-    year = movie.year
+        # Set actor properties
+        idmovie = movie.idmovies
+        title = movie.title
+        year = movie.year
 
-    try:
-        series = series.filter(models.Series.idmovies == idmovie).all()
-        for serie in series:
-            if serie.name not in series_list:
-                series_list.append(str(serie.name))
-        series_string = ', '.join(series_list)
-    except:
-        print 'skip movie ID %s' % str(idmovie)
+        try:
+            series = series.filter(models.Series.idmovies == idmovie).all()
+            for serie in series:
+                if serie.name not in series_list:
+                    series_list.append(str(serie.name))
+            series_string = ', '.join(series_list)
+        except:
+            print 'skip movie ID %s' % str(idmovie)
 
-    try:
-        data['idmovie'] = idmovie
-        data['name'] = str(series_string)
-        data['title'] = str(title)
-        data['year'] = int(year)
+        try:
+            data['idmovie'] = idmovie
+            data['name'] = str(series_string)
+            data['title'] = str(title)
+            data['year'] = int(year)
 
-        response = requests.post(url, data=json.dumps(data))
+            response = requests.post(url, data=json.dumps(data))
 
-        if not response.ok:
+            if not response.ok:
+                print 'Error on adding %s' % idmovie
+        except:
             print 'Error on adding %s' % idmovie
-    except:
-        print 'Error on adding %s' % idmovie
 
 # List: ['hot dance music']
 # Set: {'1973', 'blues'}
