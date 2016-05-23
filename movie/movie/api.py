@@ -91,7 +91,7 @@ class Actor(APIHandler):
                     actor_object['firstname'] = item.firstname
                     actor_object['lastname'] = item.lastname
                     actor_object['gender'] = item.gender
-                    for idmovie in query.movies_id:
+                    for idmovie in item.movies_id:
                         movie = dict()
                         if idmovie not in movies:
                             movie['movie_id'] = idmovie
