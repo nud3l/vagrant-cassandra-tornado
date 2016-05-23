@@ -8,9 +8,9 @@ import json
 url = 'http://node0/movie/api/actor'
 end = models.session.query(models.Actors).count()
 
-for i in xrange(0, end, 10000):
-    step = i + 10000
-    actors = models.session.query(models.Actors).order_by(models.Actors.idactors)[i:]
+for i in xrange(0, end, 1000):
+    step = i + 1000
+    actors = models.session.query(models.Actors).order_by(models.Actors.idactors)[i:step]
 
     for actor in actors:
         # empty helpers

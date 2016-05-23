@@ -132,7 +132,7 @@ $ vagrant ssh node1
 
 $ cqlsh 10.211.55.101
 
-$ CREATE KEYSPACE moviedb WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+$ CREATE KEYSPACE moviedb WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
 
 Start the webserver
 

@@ -9,9 +9,9 @@ import json
 url = 'http://node0/movie/api/movie'
 end = models.session.query(models.Movies).count()
 
-for i in xrange(0, end, 10000):
-    step = i + 10000
-    movies = models.session.query(models.Movies).order_by(models.Movies.idmovies)
+for i in xrange(0, end, 1000):
+    step = i + 1000
+    movies = models.session.query(models.Movies).order_by(models.Movies.idmovies)[i:step]
 
     for movie in movies:
         # empty helpers
