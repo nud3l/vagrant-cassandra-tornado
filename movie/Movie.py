@@ -66,6 +66,7 @@ class Application(tornado_json.application.Application):
         sync_table(models.ActorFirst)
         sync_table(models.ActorLast)
         sync_table(models.ActorLastFirst)
+	sync_table(models.Movie)
 
 def main():
     tornado.options.parse_command_line()
