@@ -6,7 +6,10 @@ import requests
 import json
 
 url = 'http://node0/movie/api/actor'
-actors = models.session.query(models.Actors)
+max = models.session.query(models.Actors).count()
+
+for i in xrange(0, max, 1000)
+actors = models.session.query(models.Actors).order_by(models.Actors.idactors)
 
 for actor in actors:
     # empty helpers
@@ -27,26 +30,26 @@ for actor in actors:
     acted_in = acted_in.filter(models.ActedIn.idactors == idactor)
 
     try:
-        for acted in acted_in:
-            movie = movies.filter(models.Movies.idmovies == acted.idmovies).first()
-            if movie.idmovies not in movies_id:
-                movies_id.append(movie.idmovies)
+	for acted in acted_in:
+	    movie = movies.filter(models.Movies.idmovies == acted.idmovies).first()
+	    if movie.idmovies not in movies_id:
+	        movies_id.append(movie.idmovies)
     except:
-        print 'skip actor ID %s' % str(idactor)
+	print 'skip actor ID %s' % str(idactor)
 
     try:
-        data['idactor'] = idactor
-        data['firstname'] = str(firstname)
-        data['lastname'] = str(lastname)
-        data['gender'] = str(gender)
-        data['movies_id'] = movies_id
+	data['idactor'] = idactor
+	data['firstname'] = str(firstname)
+	data['lastname'] = str(lastname)
+	data['gender'] = str(gender)
+	data['movies_id'] = movies_id
 
-        response = requests.post(url, data=json.dumps(data))
+	response = requests.post(url, data=json.dumps(data))
 
-        if not response.ok:
-            print 'Error on adding %s' % idactor
+	if not response.ok:
+	    print 'Error on adding %s' % idactor
     except:
-        print 'Error on adding %s' % idactor
+	print 'Error on adding %s' % idactor
 
 # List: ['hot dance music']
 # Set: {'1973', 'blues'}

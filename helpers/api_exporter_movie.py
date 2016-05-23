@@ -7,7 +7,7 @@ import json
 
 
 url = 'http://node0/movie/api/movie'
-movies = models.session.query(models.Movies)
+movies = models.session.query(models.Movies).order_by(models.Movies.idmovies)
 
 
 for movie in movies:
