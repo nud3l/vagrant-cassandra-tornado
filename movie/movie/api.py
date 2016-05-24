@@ -36,81 +36,91 @@ class Actor(APIHandler):
         }
     )
     def get(self):
-        try:
-            movies = []
-            actor = []
-            actor_object = dict()
-            multiple = False
-            query = None
+        # try:
+        movies = []
+        actor = []
+        actor_object = dict()
+        multiple = False
+        query = None
 
-            # Get arguments
-            actorId = self.get_argument('actorId', None)
-            firstname = self.get_argument('firstname', None)
-            lastname = self.get_argument('lastname', None)
+        # Get arguments
+        actorId = self.get_argument('actorId', None)
+        firstname = self.get_argument('firstname', None)
+        lastname = self.get_argument('lastname', None)
 
-            # Check which type of input/search query is delivered and select data model to use accordingly
-            # returns unique actor
-            if actorId:
-                query = models.ActorID.objects.filter(idactor=actorId).first()
-            # returns one or multiple actors
-            elif firstname and lastname:
-                query = models.ActorLastFirst.objects.filter(firstname=firstname).\
-                    filter(lastname=lastname).all()
-                multiple = True
-            # returns one or multiple actors
-            elif firstname:
-                query = models.ActorFirst.objects.filter(firstname=firstname).all()
-                multiple = True
-            # returns one or multiple actors
-            elif lastname:
-                query = models.ActorLast.objects.filter(lastname=lastname).all()
-                multiple = True
+        # Check which type of input/search query is delivered and select data model to use accordingly
+        # returns unique actor
+        if actorId:
+            query = models.ActorID.objects.filter(idactor=actorId).first()
+        # returns one or multiple actors
+        elif firstname and lastname:
+            query = models.ActorLastFirst.objects.filter(firstname=firstname).\
+                filter(lastname=lastname).all()
+            multiple = True
+        # returns one or multiple actors
+        elif firstname:
+            query = models.ActorFirst.objects.filter(firstname=firstname).all()
+            multiple = True
+        # returns one or multiple actors
+        elif lastname:
+            query = models.ActorLast.objects.filter(lastname=lastname).all()
+            multiple = True
 
-            # Retrieve details from DB
-            if query and not multiple:
-                actor_object['idactor'] = query.idactor
-                actor_object['firstname'] = query.firstname
-                actor_object['lastname'] = query.lastname
-                actor_object['gender'] = query.gender
-                for idmovie in query.movies_id:
+        # Retrieve details from DB
+        if query and not multiple:
+            actor_object['idactor'] = query.idactor
+            actor_object['firstname'] = query.firstname
+            actor_object['lastname'] = query.lastname
+            actor_object['gender'] = query.gender
+            for idmovie in query.movies_id:
+                movie = dict()
+                if idmovie not in movies:
+                    movie['movie_id'] = idmovie
+                    query_movies = models.Movie.objects.filter(idmovie=idmovie).first()
+                    if query_movies:
+	                    movie['movies_name'] = query_movies.name
+	                    movie['movies_title'] = query_movies.title
+	                    movie['movies_year'] = query_movies.year
+                    else:
+                        movie['movies_name'] = ''
+                        movie['movies_title'] = ''
+                        movie['movies_year'] = 1900
+                    movies.append(movie)
+            movies = sorted(movies, key=lambda year: year['movies_year'])
+            actor_object['movie'] = movies
+            actor.append(actor_object)
+        elif query and multiple:
+            for item in query:
+                actor_object = dict()
+                actor_object['idactor'] = item.idactor
+                actor_object['firstname'] = item.firstname
+                actor_object['lastname'] = item.lastname
+                actor_object['gender'] = item.gender
+                for idmovie in item.movies_id:
                     movie = dict()
                     if idmovie not in movies:
                         movie['movie_id'] = idmovie
                         query_movies = models.Movie.objects.filter(idmovie=idmovie).first()
-                        movie['movies_name'] = query_movies.name
-                        movie['movies_title'] = query_movies.title
-                        movie['movies_year'] = query_movies.year
+                        if query_movies:
+	                        movie['movies_name'] = query_movies.name
+	                        movie['movies_title'] = query_movies.title
+	                        movie['movies_year'] = query_movies.year
+                        else:
+                            movie['movies_name'] = ''
+                            movie['movies_title'] = ''
+                            movie['movies_year'] = 1900
                         movies.append(movie)
                 movies = sorted(movies, key=lambda year: year['movies_year'])
                 actor_object['movie'] = movies
                 actor.append(actor_object)
-            elif query and multiple:
-                for item in query:
-                    actor_object = dict()
-                    actor_object['idactor'] = item.idactor
-                    actor_object['firstname'] = item.firstname
-                    actor_object['lastname'] = item.lastname
-                    actor_object['gender'] = item.gender
-                    for idmovie in item.movies_id:
-                        movie = dict()
-                        if idmovie not in movies:
-                            movie['movie_id'] = idmovie
-                            query_movies = models.Movie.objects.filter(idmovie=idmovie).first()
-                            movie['movies_name'] = query_movies.name
-                            movie['movies_title'] = query_movies.title
-                            movie['movies_year'] = query_movies.year
-                            movies.append(movie)
-                    movies = sorted(movies, key=lambda year: year['movies_year'])
-                    actor_object['movie'] = movies
-                    actor.append(actor_object)
-            if actor:
-                return {
-                    "Actor": actor,
-                }
-            else:
-                self.error('Not Found', None, 404)
-        except:
+        if actor:
+            return {
+                "Actor": actor,
+            }
+        else:
             self.error('Not Found', None, 404)
+        #except:
+        #    self.error('Not Found', None, 404)
 
     @schema.validate(
         input_schema={
