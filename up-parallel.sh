@@ -30,7 +30,7 @@ vagrant up --no-provision
  
 # but run provision tasks in parallel
 cat <<EOF | parallel_provision
-# node0
+node0
 node1
 node2
 node3
