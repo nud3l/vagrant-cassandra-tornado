@@ -171,8 +171,10 @@ $ vagrant destroy -f
 ```
 
 ### Restart the cluster
-If you want to restart the cluster connect to node1-3 and execute:
+If you want to restart the cluster first bring them up, connect to node1-3 and execute:
 ```
+$ vagrant up
+
 $ sudo service cassandra start
 ```
 
