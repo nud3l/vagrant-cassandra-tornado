@@ -20,6 +20,15 @@ Notes:
 
 ## Instructions
 
+### Updating your /etc/hosts file
+Include the following lines in your /etc/hosts file:
+```
+10.211.55.100   node0
+10.211.55.101   node1
+10.211.55.102   node2
+10.211.55.103   node3
+```
+
 ### Setup
 
 If Vagrant has been installed correctly, you can bring up the 4 VMs with the following:
@@ -115,31 +124,31 @@ From here, you can learn more about OpsCenter:
 
 ## Setup Tornado
 Copy installation files to the machine. This can also be used to update the source code. Tornado is configured in debug and autoreload mode, which will restart the server, once you make changes to the code. Alternatively, you can setup an NFS share, so that you don't need to manually transfer the code.
-
+```
 $ scp -r ./* vagrant@node0:/var/www
-
+```
 Connect to the machine and setup the server
-
+```
 $ vagrant ssh node0
 
 $ cd /var/www
 
 $ sudo python setup.py develop
-
+```
 Create the keyspace for the movie database examples
-
+```
 $ vagrant ssh node1
 
 $ cqlsh 10.211.55.101
 
 $ CREATE KEYSPACE moviedb WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
-
+```
 Start the webserver
-
+```
 $ vagrant ssh node0
 
 $ sudo movie
-
+```
 ## Working with Cassandra
 There are some considerations, when you want to rebuild your datamodel in Cassandra. It is advisable to look int this post: http://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling
 
@@ -159,4 +168,15 @@ To destroy all 4 VMs:
 
 ```
 $ vagrant destroy -f
+```
+
+### Restart the cluster
+If you want to restart the cluster connect to node1-3 and execute:
+```
+$ sudo service cassandra start
+```
+
+It takes some time for the OpsCenter to reconnect to the nodes. In case it does not seem to work, restart the OpsCenter (from node0) with:
+```
+$ sudo service opscenterd restart
 ```
