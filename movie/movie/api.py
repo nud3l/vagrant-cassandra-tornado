@@ -78,11 +78,11 @@ class Actor(APIHandler):
                     movie['movie_id'] = idmovie
                     query_movies = models.Movie.objects.filter(idmovie=idmovie).first()
                     if query_movies:
-	                    movie['movies_name'] = query_movies.name
+	                    # movie['movies_name'] = query_movies.name
 	                    movie['movies_title'] = query_movies.title
 	                    movie['movies_year'] = query_movies.year
                     else:
-                        movie['movies_name'] = ''
+                        # movie['movies_name'] = ''
                         movie['movies_title'] = ''
                         movie['movies_year'] = 1900
                     movies.append(movie)
@@ -91,6 +91,7 @@ class Actor(APIHandler):
             actor.append(actor_object)
         elif query and multiple:
             for item in query:
+            	movies = []
                 actor_object = dict()
                 actor_object['idactor'] = item.idactor
                 actor_object['firstname'] = item.firstname
@@ -102,11 +103,11 @@ class Actor(APIHandler):
                         movie['movie_id'] = idmovie
                         query_movies = models.Movie.objects.filter(idmovie=idmovie).first()
                         if query_movies:
-	                        movie['movies_name'] = query_movies.name
+	                        # movie['movies_name'] = query_movies.name
 	                        movie['movies_title'] = query_movies.title
 	                        movie['movies_year'] = query_movies.year
                         else:
-                            movie['movies_name'] = ''
+                            # movie['movies_name'] = ''
                             movie['movies_title'] = ''
                             movie['movies_year'] = 1900
                         movies.append(movie)

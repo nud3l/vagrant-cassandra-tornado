@@ -21,7 +21,7 @@ for relevant_movie in relevant_movies:
 
 	# Query DB
 	movie = models.session.query(models.Movies).filter(models.Movies.idmovies == relevant_movie.idmovies).first()
-	series = models.session.query(models.Series)
+	series = models.session.query(models.Series).filter(models.Series.idseries == relevant_movie.idseries)
 
 	# Set actor properties
 	idmovie = movie.idmovies
